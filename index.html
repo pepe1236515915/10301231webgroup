@@ -1,52 +1,219 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello Tailwind</title>
-
-  <!-- Load Tailwind via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Optional: Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <!-- กำหนด charset ของหน้าเว็บเป็น UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- ทำให้ responsive กับหน้าจอมือถือ -->
+  <title>ตารางการใช้ห้อง - มหาวิทยาลัยแม่โจ้</title>
+  <!-- ชื่อหัวข้อที่แสดงในแท็บบราวเซอร์ -->
   <style>
+    /* กำหนดรูปแบบตัวหนังสือ สีพื้นหลัง และสีตัวอักษรหลักของหน้าเว็บ */
     body {
-      font-family: 'Roboto', sans-serif;
+      margin: 0; /* ลบ margin รอบนอกทั้งหมด */
+      font-family: "Sarabun", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; /* ฟอนต์หลัก */
+      background: #e9eaef; /* สีพื้นหลังหน้าเว็บ */
+      color: #1c2942; /* สีตัวหนังสือหลัก */
+    }
+
+    /* ส่วน header แถบด้านบน */
+    header {
+      background: linear-gradient(to right, #14b8a6, #0f766e);
+ /* สีพื้นหลังแถบ header */
+      height: 70px; /* ความสูง header */
+      display: flex; /* จัดวางโลโก้และชื่อเป็นแถวนอน */
+      align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+      padding: 0 24px; /* เว้นระยะขอบซ้าย-ขวา */
+      box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2); /* เงาเล็กน้อยด้านล่างแถบ */
+    }
+
+    /* รูปโลโก้ใน header */
+    header img {
+      height: 60px; /* ปรับขนาดสูงของโลโก้ได้ที่นี่ */
+      width: auto; /* รักษาสัดส่วนอัตโนมัติ */
+    }
+
+    /* ห่อข้อความชื่อมหาวิทยาลัยและ registrar system ให้อยู่ในคอลัมน์ */
+    header .uni-text {
+      display: flex;
+      flex-direction: column; /* เรียงข้อความแนวตั้ง */
+      justify-content: center;
+      margin-left: 10px; /* ช่องว่างระหว่างโลโก้กับข้อความ */
+      user-select: none; /* ป้องกันไม่ให้ข้อความถูกเลือก */
+    }
+
+    /* ชื่อมหาวิทยาลัยใน header */
+    header .uni-name {
+      color: white; /* สีชื่อมหาวิทยาลัย */
+      font-weight: 700; /* ตัวหนา */
+      font-size: 1.2rem; /* ขนาดตัวอักษร */
+      white-space: nowrap; /* ไม่ขึ้นบรรทัดใหม่ */
+      line-height: 1.1; /* ลดระยะบรรทัด */
+      margin: 0; /* ล้าง margin */
+    }
+
+    /* ข้อความ registrar system อยู่ใต้ชื่อมหาวิทยาลัย */
+    header .REG-system {
+      color: white; /* สีข้อความ */
+      font-weight: 600; /* ความหนา */
+      font-size: 0.9rem; /* เล็กกว่า uni-name */
+      opacity: 0.85; /* ความโปร่งแสงเล็กน้อย */
+      margin: 2px 0 0 0; /* เว้นช่องว่างด้านบน */
+      white-space: nowrap; /* ไม่ขึ้นบรรทัดใหม่ */
+    }
+
+    /* ส่วน main สำหรับเนื้อหาและฟอร์ม */
+    main {
+      max-width: 800px; /* กำหนดความกว้างสูงสุด */
+      margin: 4rem auto; /* เว้นระยะด้านบน-ล่างและกึ่งกลางซ้าย-ขวา */
+      background: #faf9f9; /* พื้นหลังกล่องเนื้อหา */
+      padding: 1.5rem 2rem 2rem 2rem; /* ระยะขอบภายในกล่อง (บน ซ้าย ขวา ล่าง) */
+      border-radius: 8px; /* มุมโค้งของกล่อง */
+      box-shadow: 0 1px 10px rgba(0,0,0,0.1); /* เงาบางๆ รอบกล่อง */
+    }
+
+    /* หัวข้อหลัก (h1) */
+    main h1 {
+      text-align: center; /* จัดข้อความกึ่งกลาง */
+      margin-bottom: 1.2rem; /* เว้นช่องว่างด้านล่างหัวข้อ */
+      color: #e0a250; /* สีตัวหนังสือหัวข้อ */
+    }
+
+    /* label ป้ายชื่อฟิลด์ในฟอร์ม */
+    label {
+      display: block; /* เป็นบล็อกใหม่ */
+      margin-top: 1.2rem; /* ช่องว่างด้านบน */
+      font-weight: 600; /* ตัวหนา */
+    }
+
+    /* ช่องกรอกข้อมูลแบบ select และ date ครอบคลุมให้เท่ากันทุกช่อง */
+    select, input[type="date"] {
+      box-sizing: border-box; /* ขนาดรวม padding และ border */
+      width: 100%; /* เต็มความกว้าง */
+      max-width: 100%; /* ไม่ให้เกิน container */
+      padding: 0.5rem; /* ระยะในช่อง */
+      margin-top: 0.35rem; /* ช่องว่างด้านบน */
+      border: 1.5px solid #481f1f; /* สีขอบ */
+      border-radius: 6px; /* มุมโค้งเล็กน้อย */
+      font-size: 1rem; /* ขนาดฟอนต์ */
+      height: 38px; /* ความสูงเท่ากันทุกช่อง */
+      transition: border-color 0.3s ease; /* animation เปลี่ยนสีขอบเมื่อ focus */
+    }
+
+    /* สีขอบเมื่อ focus */
+    select:focus, input[type="date"]:focus {
+      border-color: #64cf12; /* สีขอบเมื่อเลือก */
+      outline: none; /* เอา outline ออก */
+    }
+
+    /* กล่องปุ่มล่าง */
+    .buttons {
+      margin-top: 2rem; /* ช่องว่างด้านบน */
+      text-align: center; /* จัดกึ่งกลาง */
+    }
+
+    /* ปุ่มทั่วไป */
+    button {
+      cursor: pointer; /* เปลี่ยนเคอร์เซอร์เป็น pointer */
+      font-weight: 600; /* ตัวหนา */
+      font-size: 1rem; /* ขนาดตัวอักษร */
+      padding: 0.6rem 1.4rem; /* ระยะขอบด้านใน */
+      border: none; /* เอาขอบออก */
+      border-radius: 5px; /* มุมโค้ง */
+      margin: 0 0.5rem; /* ระยะขอบซ้าย-ขวา */
+      transition: background-color 0.3s ease; /* เอฟเฟกต์เปลี่ยนสี */
+      color: white; /* สีตัวหนังสือปุ่ม */
+      background-color: #007bff; /* สีพื้นหลังปกติ */
+    }
+
+    /* สีปุ่มเมื่อ hover */
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* ปุ่มล้างข้อมูล */
+    button.reset {
+      background-color: #515865; /* สีปุ่ม */
+    }
+
+    /* สีปุ่มล้างข้อมูลเมื่อ hover */
+    button.reset:hover {
+      background-color: #a12121;
     }
   </style>
 </head>
+<body>
 
-<body class="bg-white text-black">
-  <div class="min-h-screen flex flex-col">
+  <!-- แถบ header ด้านบน -->
+  <header>
+    <!-- โลโก้ -->
+    <!-- แก้ไข src เป็นที่อยู่รูปโลโก้ที่ใช้จริง -->
+    <img src="img/LOGOmju.png" alt="โลโก้มหาวิทยาลัยแม่โจ้" />
+    
+    <!-- ก้อนข้อความ ชื่อมหาวิทยาลัย และ registrar system -->
+    <div class="uni-text">
+      <div class="uni-name">มหาวิทยาลัยแม่โจ้</div>
+      <div class="REG-system">registrar system</div>
+    </div>
+  </header>
 
-    <!-- Header -->
-    <header class="py-6 text-center">
-      <h1 class="text-4xl sm:text-7xl font-bold bg-gradient-to-r from-red-500 via-yellow-500 to-green-500 bg-clip-text text-transparent">
-        Hello Tailwind!
-      </h1>
-    </header>
+  <!-- ส่วนเนื้อหา main -->
+  <main>
+    <!-- หัวข้อหลัก -->
+    <h1>ตารางการใช้ห้อง</h1>
 
-    <!-- Navigation -->
-    <nav class="bg-blue-200 py-3">
-      <ul class="flex justify-center space-x-6">
-        <li><a href="#" class="hover:underline">Home</a></li>
-        <li><a href="#" class="hover:underline">About</a></li>
-        <li><a href="#" class="hover:underline">Contact</a></li>
-      </ul>
-    </nav>
+    <!-- ฟอร์มค้นหาข้อมูล -->
+    <form id="searchForm" action="#" method="get">
 
-    <!-- Content -->
-    <main class="p-6">
-      <h2 class="text-2xl font-bold mb-2">เนื้อหาหลัก</h2>
-      <p class="text-gray-700">ยินดีต้อนรับสู่เว็บแรกของคุณที่ใช้ Tailwind CSS!</p>
-    </main>
+      <!-- เลือกอาคาร -->
+      <label for="building">อาคาร</label>
+      <select id="building" name="building">
+        <option value="" selected>โปรดเลือกตัวเลือก</option>
+        <option value="all">ทั้งหมด</option>
+        <option value="building1">อาคารเรียน 80 ปี แม่โจ้</option>
+        <option value="building2">คณะวิทยาศาสตร์</option>
+        <option value="building3">อาคารจุฬาภรณ์ คณะวิทยาศาสตร์</option>
+      </select>
 
-    <!-- Footer -->
-    <footer class="bg-gray-100 text-center py-4 text-sm text-gray-600">
-      Footer Area
-    </footer>
+      <!-- เลือกห้อง -->
+      <label for="room">ห้อง</label>
+      <select id="room" name="room">
+        <option value="all" selected>ทั้งหมด</option>
+        <option value="room101">101</option>
+        <option value="room102">321</option>
+        <option value="room201">213</option>
+      </select>
 
-  </div>
+      <!-- เลือกความจุของห้อง -->
+      <label for="capacity">ความจุของห้อง</label>
+      <select id="capacity" name="capacity">
+        <option value="all" selected>ทั้งหมด</option>
+        <option value="10">น้อยกว่า 10 คน</option>
+        <option value="30">10-30 คน</option>
+        <option value="50">30-50 คน</option>
+        <option value="100">มากกว่า 50 คน</option>
+      </select>
+
+      <!-- เลือกประเภทของห้อง -->
+      <label for="roomType">ประเภทของห้อง</label>
+      <select id="roomType" name="roomType">
+        <option value="all" selected>ทั้งหมด</option>
+        <option value="classroom">ห้องเรียน</option>
+        <option value="lab">ห้องปฏิบัติการ</option>
+        <option value="meeting">ห้องประชุม</option>
+      </select>
+
+      <!-- เลือกวันที่ -->
+      <label for="date">ค้นหาตามวันที่</label>
+      <input type="date" id="date" name="date" />
+
+      <!-- ปุ่มกด ล้าง และ ค้นหา -->
+      <div class="buttons">
+        <button type="reset" class="reset">ล้างเงื่อนไข</button>
+        <button type="submit">ค้นหา</button>
+      </div>
+    </form>
+  </main>
+
 </body>
 </html>

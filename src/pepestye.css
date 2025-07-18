@@ -1,0 +1,59 @@
+body {
+    background: #fff;
+    font-family: Arial, sans-serif;
+}
+.main {
+    width: 440px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+.header-box {
+    background: #eee;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    display: inline-block;
+}
+.search-box {
+    margin-top: 10px;
+    border: 1px solid #bbb;
+    padding: 5px;
+    border-radius: 8px;
+}
+.card {
+    border: 1px solid #dedede;
+    margin-top: 15px;
+    border-radius: 10px;
+    padding: 10px;
+}
+.card .room {
+    margin-bottom: 3px;
+}
+.filters {
+    margin-top: 10px;
+}
+.filters label {
+    margin-right: 10px;
+}
+.reset-link {
+    float: right;
+    font-size: 13px;
+    color: rgb(29, 180, 155);
+}
+.title {
+    font-weight: bold;
+    font-size: 18px;
+}
+.department {
+    color: rgb(6, 77, 17);
+    font-size: 13px;
+}
+.view-schedule {
+    color: rgb(233, 131, 47);
+    font-size: 13px;
+    text-align: right;
+    display: block;
+}
